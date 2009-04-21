@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>git-harvest</title>
+    <style type="text/css" media="screen">
+      
+      body{
+      font-family: Verdana, Arial, sans-serif;
+      font-size:72%;
+      margin:0;
+      padding:40px 60px;
+      }
+      :focus{ outline:0; }
+      #wrap{
+      width:800px;
+      padding-top:20px;
+      }
+
+      /*-----------------------------------
+      Default Typography
+      -----------------------------------*/
+
+      a{
+      color:#24F;
+      font-weight:bold;
+      }
+
+      h1, h2, h3, h4, h5, h6{ font-family:Arial, sans-serif; }
+
+      h1{ 
+      font-size:3.8em;
+      letter-spacing:-.06em;
+      }
+
+      h2{
+      margin-top:28px;
+      margin-bottom:-.06em;
+      font-size:1.6em;
+      }
+
+      h3{
+      margin-top:25px;
+      margin-bottom:-.08em;
+      }
+
+      h1.domain, h1.domain a{
+      letter-spacing:-.06em;
+      margin:0;
+      padding:0;
+      line-height:.4em;
+      font-size:4.4em;
+      text-decoration:none;
+      text-shadow:#666 8px -8px;
+      }
+
+      /*-----------------------------------
+      #article - show
+      -----------------------------------*/
+
+      /* title */
+
+      h1.title, h1.title a{
+      margin:10px 0px -.1em;
+      }
+      h1.title a{
+      --xbackground:#D4D4D4;
+      color:#000;
+      text-decoration:none;
+      }
+      h1.title a:hover{
+      --background:#FFA;
+      text-decoration:underline;
+      }
+
+      /* body */
+
+      .body p, .body li{
+      line-height:170%;
+      }
+
+
+
+
+      /*-------------------------------------
+        STANDARD PAGE FORMS
+        -------------------------------------*/
+
+        input[type='text'], input[type='password'], 
+        input[type='checkbox'], select, textarea {
+        border: 1px solid #ddd;
+        border-top: 1px solid #aaa;
+        border-left: 1px solid #aaa;
+        border-width:1px;
+        font-family:Verdana, "Lucida Grande", Lucida, Helvetica, sans-serif;
+        font-size: 1.8em;
+        padding: 2px;
+        }
+        input[type='text']:focus, input[type='password']:focus, textarea:focus {
+        background: #ffd;
+        color: #000;
+        }
+        input[type='text'],input[type='password']{
+        width:400px;
+        }
+        label {
+        color:#444;
+        font-weight: bold;
+        text-shadow: #fff 1px 1px;
+        margin-top: 10px;
+        padding:0;
+        display:block;
+        }
+        #box{
+        background:#ddd;
+        padding:10px 25px 15px 20px;
+        width:800px;
+        -webkit-box-shadow:#666 8px -8px;
+        }
+        #box h2{
+        font-size:1.8em;
+        margin:30px 20px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <h1 class="domain"><a href="/">&nbsp;git-harvest</a></h1>
+      <div id="box">
+        <% if env["REQUEST_METHOD"] == "POST" %>
+          <h2>http://git-harvest/<%= params[:company] %>/<%= params[:email] %>/<%= params[:project_id] %>/<%= params[:task_id] %>/<%= params[:password].encrypt %></h3>
+        <% else %>
+          <form action="/" method="post">
+            <label>company</label>
+            <input name="company" type="text">
+            <label>email</label>
+            <input name="email" type="text">
+            <label>project(id)</label>
+            <input name="project_id" type="text">
+            <label>task(id)</label>
+            <input name="task_id" type="text">
+            <label>password</label>
+            <input name="password" type="password">
+            <br /><br />
+            <input type="submit">
+          </form>
+        <% end %>
+      </div>
+    </div>
+  <body>
+</html>

@@ -24,7 +24,7 @@ payload={
         "email": "chris@cobaltedge.com",
         "name": "Chris Bailey" 
       },
-      "message": "This one is a comment only 10 [Story294825]",
+      "message": "This one is a comment only 10 [Story294825] -t 2.0",
       "timestamp": "2008-02-15T14:57:17-08:00",
       "added": ["filepath.rb"]
     },
@@ -35,7 +35,7 @@ payload={
         "email": "chris@cobaltedge.com",
         "name": "Chris Bailey" 
       },
-      "message": "This one does not have a story association",
+      "message": "This one does not have a story association -t 2.0",
       "timestamp": "2008-02-15T14:58:17-08:00",
       "added": ["filepath.rb"]
     },
@@ -58,7 +58,7 @@ eos
 headers = { 'Content-Type' => 'application/x-www-form-urlencoded' }
  
 http = Net::HTTP.new('localhost', 4567)
-resp, data = http.post('/nitobi/brock.whitten@nitobi.com/91059/100290', payload, headers)
+resp, data = http.post('/nitobi/brock.whitten@nitobi.com/91059/100290/lqpetTy', payload, headers)
  
 puts "Response code: #{resp.code}"
 puts "Response body: #{data}"

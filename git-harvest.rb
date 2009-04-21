@@ -10,16 +10,24 @@ require 'jcode'
 require 'net/http'
 require 'net/https'
 require 'time'
+require 'openssl'
 
 KEYWORD = "-t"
 HAS_SSL = true
-PASSWORD = 'secret' #this needs to be moved to config file!!
 
-post '/:company/*/:project/:task' do
+get '/' do
+  erb :index
+end
+
+post '/' do
+  erb :index
+end
+
+post '/:company/*/:project/:task/:password' do
   payload = JSON.parse(params[:payload])
   message = payload["commits"].last["message"]
   if message.include?(KEYWORD)
-    harvest = Harvest.new(params[:company], params[:splat], params[:project], params[:task], message)
+    harvest = Harvest.new(params[:company], params[:splat], params[:project], params[:task], params[:password], message)
     harvest.save
     "thanks"
   else
@@ -29,8 +37,8 @@ end
 
 class Harvest
 
-  def initialize(company, email, project, task, message)
-    @company, @email, @project, @task, @message = company, email, project, task, message
+  def initialize(company, email, project, task, encrypted_password, message)
+    @company, @email, @project, @task, @password, @message = company, email, project, task, encrypted_password.decrypt, message
     @preferred_protocols = [HAS_SSL, ! HAS_SSL]
     connect!
   end
@@ -46,7 +54,7 @@ class Harvest
   end
 
   def auth_string
-    Base64.encode64("#{@email}:#{PASSWORD}").delete("\r\n")
+    Base64.encode64("#{@email}:#{@password}").delete("\r\n")
   end
 
   def request path, method = :get, body = ""
@@ -122,4 +130,18 @@ class Harvest
     @retry_counter += 1
   end
 
+end
+
+class String
+  def self.cypher
+    ["a-zA-Z0-9+_", "c-zab0-9D-ZABC_+"]
+  end
+  
+  def encrypt
+    tr String.cypher[0], String.cypher[1]
+  end
+
+  def decrypt
+    tr String.cypher[1], String.cypher[0]
+  end
 end
