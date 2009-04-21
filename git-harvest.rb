@@ -12,7 +12,7 @@ require 'net/https'
 require 'time'
 require 'openssl'
 
-KEYWORD = "-t"
+KEYWORD = "Time"
 HAS_SSL = true
 
 get '/' do
