@@ -24,19 +24,19 @@ payload={
         "email": "chris@cobaltedge.com",
         "name": "Chris Bailey" 
       },
-      "message": "This one is a comment only 10 [Story294825] -t 2.0",
-      "timestamp": "2008-02-15T14:57:17-08:00",
+      "message": "this is a test. first -t 2.0",
+      "timestamp": "2009-04-21T14:57:17-08:00",
       "added": ["filepath.rb"]
     },
     {
       "id": "41a212ee83ca321e3c8cf465891cb7216a705f59",
       "url": "http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
       "author": {
-        "email": "chris@cobaltedge.com",
+        "email": "brock.whitten@nitobi.com",
         "name": "Chris Bailey" 
       },
-      "message": "This one does not have a story association -t 2.0",
-      "timestamp": "2008-02-15T14:58:17-08:00",
+      "message": "this is a test. second -t 1.4",
+      "timestamp": "2009-04-21T14:58:17-08:00",
       "added": ["filepath.rb"]
     },
     {
@@ -46,8 +46,8 @@ payload={
         "email": "chris@cobaltedge.com",
         "name": "Chris Bailey" 
       },
-      "message": "try something new -t 0.8",
-      "timestamp": "2008-02-15T14:36:34-08:00" 
+      "message": "this is a test. third -t 0.8",
+      "timestamp": "2009-04-21T14:36:34-08:00" 
     }
   ],
   "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",

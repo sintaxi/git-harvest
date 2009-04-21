@@ -129,7 +129,7 @@
       <h1 class="domain"><a href="/">&nbsp;git-harvest</a></h1>
       <div id="box">
         <% if env["REQUEST_METHOD"] == "POST" %>
-          <h2>http://git-harvest/<%= params[:company] %>/<%= params[:email] %>/<%= params[:project_id] %>/<%= params[:task_id] %>/<%= params[:password].encrypt %></h3>
+          <h2>http://git-harvest.nitobi.com/<%= params[:company] %>/<%= params[:email] %>/<%= params[:project_id] %>/<%= params[:task_id] %>/<%= params[:password].encrypt %></h3>
         <% else %>
           <form action="/" method="post">
             <label>company</label>

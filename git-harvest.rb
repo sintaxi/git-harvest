@@ -25,20 +25,21 @@ end
 
 post '/:company/*/:project/:task/:password' do
   payload = JSON.parse(params[:payload])
-  message = payload["commits"].last["message"]
-  if message.include?(KEYWORD)
-    harvest = Harvest.new(params[:company], params[:splat], params[:project], params[:task], params[:password], message)
-    harvest.save
-    "thanks"
-  else
-    "no harvest hook found"
+  
+  payload["commits"].each do |commit| 
+    if commit["author"]["email"] == params[:splat].to_s && commit["message"].include?(KEYWORD)
+      harvest = Harvest.new(params[:company], params[:splat].to_s, params[:project], params[:task], params[:password], commit)
+      str = "Thanks" if harvest.save      
+    end
   end
+  str ||= "No Thanks"
+  params.inspect
 end
 
 class Harvest
 
-  def initialize(company, email, project, task, encrypted_password, message)
-    @company, @email, @project, @task, @password, @message = company, email, project, task, encrypted_password.decrypt, message
+  def initialize(company, email, project, task, encrypted_password, commit)
+    @company, @email, @project, @task, @password, @commit = company, email, project, task, encrypted_password.decrypt, commit
     @preferred_protocols = [HAS_SSL, ! HAS_SSL]
     connect!
   end
@@ -84,15 +85,15 @@ class Harvest
   end
   
   def note
-    @message.split(KEYWORD)[0].strip
+    @commit["message"].split(KEYWORD)[0].strip
   end
 
   def time_spent
-    @message.split(KEYWORD)[1].strip
+    @commit["message"].split(KEYWORD)[1].strip
   end
   
   def save
-    request('/daily/add', :post, "<request><notes>#{note}</notes><hours>#{time_spent}</hours><project_id type='integer'>#{@project}</project_id><task_id type='integer'>#{@task}</task_id><spent_at type='date'>#{Time.now.strftime("%a, %e %b %Y")}</spent_at></request>").body
+    request('/daily/add', :post, "<request><notes>#{note}</notes><hours>#{time_spent}</hours><project_id type='integer'>#{@project}</project_id><task_id type='integer'>#{@task}</task_id><spent_at type='date'>#{Time.parse(@commit["timestamp"]).strftime("%a, %e %b %Y")}</spent_at></request>").body
   end
 
   private
@@ -132,6 +133,7 @@ class Harvest
 
 end
 
+# http://jasondanielong.multiply.com/journal/item/181/Facets_of_Ruby_Simple_encryption_for_dummies
 class String
   def self.cypher
     ["a-zA-Z0-9+_", "c-zab0-9D-ZABC_+"]
